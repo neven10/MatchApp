@@ -48,5 +48,21 @@ namespace LoginWindow
             Left = Left + e.HorizontalChange;
             Top = Top + e.VerticalChange;
         }
+
+        private void Btn_OpenNewUser_Click(object sender, RoutedEventArgs e)
+        {
+            if(!Popup_NewUser.IsOpen)
+            {
+                Popup_NewUser.IsOpen = true;
+            }
+        }
+
+        private void Btn_CancelPopup_Click(object sender, RoutedEventArgs e)
+        {
+            if (Popup_NewUser.IsOpen)
+            {
+                Popup_NewUser.IsOpen = false;
+            }
+        }
     }
 }
