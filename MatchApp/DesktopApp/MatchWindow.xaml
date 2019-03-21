@@ -6,31 +6,30 @@
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
         Title="MatchWindow" Height="667.074" Width="1000">
-    
+
 
     <Grid>
-       
-        
         <StackPanel Margin="10,43,227,317" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Button Click="Button_Click">Test</Button>
             <Label>Current Matches</Label>
             <ListView Name="currentMatchesListView">
-                <ListView.ItemTemplate>
-                    <DataTemplate DataType="local:CurrentMatches">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Name="Event" Text="{Binding EventID}"></TextBlock>
-                        </StackPanel>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="100" Header="Sport" DisplayMemberBinding="{Binding Sport}"></GridViewColumn>
+                        <GridViewColumn Width="150" Header="Host" DisplayMemberBinding="{Binding HomeTeam}"></GridViewColumn>
+                        <GridViewColumn Width="150" Header="Guest" DisplayMemberBinding="{Binding AwayTeam}"></GridViewColumn>
+                        <GridViewColumn Width="80" Header="Score" DisplayMemberBinding="{Binding Score}"></GridViewColumn>
+                        <GridViewColumn Width="90" Header="Match Status" DisplayMemberBinding="{Binding Status}"></GridViewColumn>
                         
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-      
-                          
+                    </GridView>
+
+                </ListView.View>
             </ListView>
-        
         </StackPanel>
-       
+
+
         <StackPanel Margin="10,342,227,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Label>Picked Matches</Label>
+            <Label>Picked Matches</Label>
 
         </StackPanel>
 

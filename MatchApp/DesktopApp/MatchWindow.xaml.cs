@@ -36,7 +36,7 @@ namespace DesktopApp
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-         
+
         }
 
 
@@ -50,9 +50,12 @@ namespace DesktopApp
             var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44315/api/Match/All");
             var response = await httpClient.SendAsync(request);
             var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<MatchDTO>>(content);        
-            
-            
+            return JsonConvert.DeserializeObject<List<MatchDTO>>(content);
+        }
+
+        private async Task Aggregate()
+        {
+            await Task.Delay(1);
         }
 
         private async Task GetCurrentMatches()
@@ -64,13 +67,25 @@ namespace DesktopApp
 
             foreach (MatchDTO m in matchDTO)
             {
-                CurrentMatchesCollection.Add(new CurrentMatches { EventID = m.EventID});
-        
+                CurrentMatchesCollection.Add
+                    (new CurrentMatches
+                    {
+                        EventID = m.EventID,
+                        Sport =m.Sport,
+                        HomeTeam = m.HomeTeam,
+                        AwayTeam = m.AwayTeam,
+                        Score = m.Score,
+                        StartTime = m.StartTime,
+                        FinishTime = m.FinishTime,                        
+                        CurrentMinutes =m.CurrentMinutes,
+                        IsPause = m.IsPause                                                    
+                    });
+
 
             }
 
         }
-      
+
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
