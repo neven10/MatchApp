@@ -1,0 +1,21 @@
+﻿<Window x:Class="DesktopApp.MatchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopApp"
+        mc:Ignorable="d"
+        Title="MatchWindow" Height="667.074" Width="1000">
+    <Grid>
+        <Label>Current Matches</Label>
+        <StackPanel Margin="10,43,227,317" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+          
+        
+        </StackPanel>
+        <StackPanel Margin="10,342,227,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+
+        </StackPanel>
+
+    </Grid>
+</Window>

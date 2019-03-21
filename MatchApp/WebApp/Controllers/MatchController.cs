@@ -5,24 +5,30 @@ using System.Threading.Tasks;
 using Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class MatchApiController : ControllerBase
+    public class MatchController : ControllerBase
     {
         private readonly MatchDbContext _context;
 
-        public MatchApiController(MatchDbContext context)
+        public MatchController(MatchDbContext context)
         {
             _context = context;
         }
 
         [HttpGet("[action]")]
-        public List<Data.Model.MatchEvent> All() => _context.MatchEvents.ToList();
+        public async Task<ActionResult<List<Data.Model.MatchEvent>>>All()
+        {
+
+            return await _context.MatchEvents.ToListAsync();
+        }
 
 
         

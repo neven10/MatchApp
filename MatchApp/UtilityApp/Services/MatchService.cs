@@ -26,20 +26,25 @@ namespace UtilityApp.Services
 
        
 
-        public async Task GetMatchTimeSpanAndSave(TimeSpan interval, bool initiate)
+        public async Task GetMatchTimeSpanAndSave(TimeSpan interval, bool initiate, CancellationToken cancellationToken)
         {
   
                 while (initiate == true)
                 {
                     await Task.Delay(interval);
-                    await SaveToDb();
+                    await SaveToDb(cancellationToken);
                 }
 
         }
 
-        private async Task SaveToDb()
+        private async Task SaveToDb(CancellationToken cancellationToken)
         {
-            List<MatchRoot> matchRoot = await GetMatch();
+            if(cancellationToken.IsCancellationRequested)
+            {
+                //Stop and Implement Rollback if needed
+                return;
+            }
+            List<MatchRoot> matchRoot = await GetMatch(cancellationToken);
             List<MatchEvent> matchEvent = new List<MatchEvent>();
             foreach (var e in matchRoot)
             {
@@ -76,12 +81,16 @@ namespace UtilityApp.Services
         }
 
 
-        private async Task<List<MatchRoot>> GetMatch()
+        private async Task<List<MatchRoot>> GetMatch(CancellationToken cancellationToken)
         {
-
+            if(cancellationToken.IsCancellationRequested)
+            {
+                //Stop and Implement Rollback if needed
+                return null;
+            }
             httpClient = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "https://demo.aleacontrol.net/stakesimulator/api/matches");
-            using (var response = await httpClient.SendAsync(request))
+            using (var response = await httpClient.SendAsync(request, cancellationToken))
             {
                 string content = await response.Content.ReadAsStringAsync();         //readasync i dump to string, a ako je json ogroman, onda streamreader
                 if (response.IsSuccessStatusCode == false)

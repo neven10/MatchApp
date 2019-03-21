@@ -102,7 +102,7 @@
                             <Grid Margin="0,0,0,8">
                                 <PasswordBox Background="Transparent" HorizontalContentAlignment="Center" BorderBrush="{StaticResource MainBlackFontColor}" HorizontalAlignment="Center" VerticalContentAlignment="Center" Name="LocalPasswordBox" Height="36" Width="220" IsEnabled="True" TabIndex="5" />
                             </Grid>
-                            <Button x:Name="LocalLoginButton" Content="Login" Width="220" Height="36" Margin="0,0,0,32" TabIndex="8" />
+                            <Button x:Name="LocalLoginButton" Content="Login" Width="220" Height="36" Margin="0,0,0,32" TabIndex="8" Click="LocalLoginButton_Click" />
 
                             <Label Content="Don't have account yet? Click here:" FontSize="10"></Label>
                             <Button Name="Btn_OpenNewUser" Content="Register" Width="219" Height="36" Click="Btn_OpenNewUser_Click"></Button>
@@ -116,18 +116,18 @@
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <TextBlock Text="Please enter following information:"></TextBlock>
                         <Label>Username:</Label>
-                        <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="NewUserName" IsEnabled="True"  CharacterCasing="Lower"  Grid.ColumnSpan="2" />
+                        <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="Textbox_NewUserName" IsEnabled="True"  CharacterCasing="Lower"  Grid.ColumnSpan="2" />
                         <Label>Password:</Label>
-                        <PasswordBox   Name="NewPassword" IsEnabled="True"   Grid.ColumnSpan="2" Height="32" />
+                            <PasswordBox   Name="Textbox_NewPassword" IsEnabled="True"   Grid.ColumnSpan="2" Height="32" HorizontalContentAlignment="Center" />
                         <Label>Email:</Label>
-                            <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="NewEmail" IsEnabled="True"   Grid.ColumnSpan="2" />
+                            <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="Textbox_NewEmail" IsEnabled="True"   Grid.ColumnSpan="2" />
                         <Label>Name:</Label>
-                            <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="NewName"  IsEnabled="True" CharacterCasing="Normal"  TabIndex="4" Grid.ColumnSpan="2" />
+                            <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="Textbox_NewName"  IsEnabled="True" CharacterCasing="Normal"  TabIndex="4" Grid.ColumnSpan="2" />
                         <Label>Surname:</Label>
-                            <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="NewSurname" IsEnabled="True" CharacterCasing="Normal"  Grid.ColumnSpan="2" />
+                            <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="Textbox_NewSurname" IsEnabled="True" CharacterCasing="Normal"  Grid.ColumnSpan="2" />
                             <Separator/>
                             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button>Register</Button>
+                            <Button Name="Btn_RegisterNewUser" Click="Btn_RegisterNewUser_Click">Register</Button>
                             <Label></Label>
                             <Button Name="Btn_CancelPopup" Click="Btn_CancelPopup_Click">Cancel</Button>
                         </StackPanel>
