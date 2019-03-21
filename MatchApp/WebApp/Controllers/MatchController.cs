@@ -6,6 +6,7 @@ using Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApp.DTO;
 using WebApp.Models;
 using WebApp.ViewModels;
 
@@ -24,10 +25,27 @@ namespace WebApp.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<ActionResult<List<Data.Model.MatchEvent>>>All()
+        public async Task<ActionResult<List<MatchDTO>>> All()
         {
-
-            return await _context.MatchEvents.ToListAsync();
+           var match = await _context.MatchEvents.Include(x => x.MatchTimeList).ThenInclude(y => y.StakesList).ToListAsync();
+            List<MatchDTO> dto = new List<MatchDTO>();
+            foreach(var s in match)
+            {
+                dto.Add(new MatchDTO
+                {
+                    Id = s.Id,
+                    EventID = s.EventID,
+                    Sport = s.Sport,
+                    HomeTeam = s.HomeTeam,
+                    AwayTeam = s.AwayTeam,
+                    CurrentMinutes = s.MatchTimeList.Select(x => x.CurrentMinutes).FirstOrDefault(),
+                    Score = s.MatchTimeList.Select(x => x.Score).FirstOrDefault(),
+                    StartTime = s.StartTime,
+                    FinishTime = s.FinishTime,
+                    IsPause = s.MatchTimeList.Select(x => x.IsPause).FirstOrDefault()                                       
+                });                 
+            }
+            return dto; 
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DesktopApp.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.Model
 {
-    public class Stake
+    public class Stake : BindableBase
     {
         public string StakeID { get; set; }
         public string StakeKey { get; set; }
         public double StakeValue { get; set; }
     }
 
-    public class CurrentMatches
+    public class CurrentMatches : BindableBase
     {
         public string EventID { get; set; }
         public string Sport { get; set; }

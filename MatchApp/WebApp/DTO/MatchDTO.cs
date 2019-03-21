@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace DesktopApp.DTO
+namespace WebApp.DTO
 {
-
     public class MatchDTO
     {
-
         public int Id { get; set; }
         public string EventID { get; set; }
         public string Sport { get; set; }
@@ -20,11 +17,5 @@ namespace DesktopApp.DTO
         public int CurrentMinutes { get; set; }
         public string Score { get; set; }
         public bool IsPause { get; set; }
-
-
-
     }
 }
-
-
-

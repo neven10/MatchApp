@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -28,13 +29,14 @@ namespace DesktopApp
     {
         private static HttpClient httpClient;
 
-        private ObservableCollection<CurrentMatches> currentMatchesObserver;
-        private ObservableCollection<PickedMatches> pickedMatchesObserver;
+        public ObservableCollection<CurrentMatches> CurrentMatchesCollection { get; set; }
+        public ObservableCollection<PickedMatches> pickedMatchesObserver;
 
         public MatchWindow()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+         
         }
 
 
@@ -46,54 +48,33 @@ namespace DesktopApp
             var list = new List<MatchDTO>();
             httpClient = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44315/api/Match/All");
-            using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
-            {
-                var stream = await response.Content.ReadAsStreamAsync();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    list = DeserializeJsonFromStream<List<MatchDTO>>(stream);
-                }
-
-                return list;
-            }
-
+            var response = await httpClient.SendAsync(request);
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<MatchDTO>>(content);        
+            
+            
         }
 
-        private async Task CurrentMatchObserver()
+        private async Task GetCurrentMatches()
         {
-            currentMatchesObserver = new ObservableCollection<CurrentMatches>();
+            CurrentMatchesCollection = new ObservableCollection<CurrentMatches>();
 
             var matchDTO = await MatchDTODeserializeAsync();
-           // listViewPopularMovies.ItemsSource = observer;
+            currentMatchesListView.ItemsSource = CurrentMatchesCollection;
 
             foreach (MatchDTO m in matchDTO)
             {
-                currentMatchesObserver.Add(new CurrentMatches
-                {
-
-                });
-
-
+                CurrentMatchesCollection.Add(new CurrentMatches { EventID = m.EventID});
+        
 
             }
 
         }
+      
 
-
-        private static T DeserializeJsonFromStream<T>(Stream stream)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (stream == null || stream.CanRead == false)
-                return default(T);
-            using (var sr = new StreamReader(stream))
-            using (var jtr = new JsonTextReader(sr))
-            {
-                var jr = new JsonSerializer();
-                var searchResult = jr.Deserialize<T>(jtr);
-                return searchResult;
-            }
+            await GetCurrentMatches();
         }
-
-
     }
 }

@@ -6,14 +6,31 @@
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
         Title="MatchWindow" Height="667.074" Width="1000">
+    
+
     <Grid>
-        <Label>Current Matches</Label>
+       
+        
         <StackPanel Margin="10,43,227,317" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-          
+            <Button Click="Button_Click">Test</Button>
+            <Label>Current Matches</Label>
+            <ListView Name="currentMatchesListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="local:CurrentMatches">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Name="Event" Text="{Binding EventID}"></TextBlock>
+                        </StackPanel>
+                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+      
+                          
+            </ListView>
         
         </StackPanel>
+       
         <StackPanel Margin="10,342,227,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
+        <Label>Picked Matches</Label>
 
         </StackPanel>
 

@@ -60,6 +60,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DTO\MatchDTO.cs" />
+    <Compile Include="Helpers\BindableBase.cs" />
     <Compile Include="LoginWindow.xaml.cs" />
     <Compile Include="MatchWindow.xaml.cs">
       <DependentUpon>MatchWindow.xaml</DependentUpon>
