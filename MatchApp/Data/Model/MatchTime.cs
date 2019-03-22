@@ -11,6 +11,8 @@ namespace Data.Model
         [Key]
         public int Id { get; set; }
 
+        public string EventID { get; set; }
+
         public int CurrentMinutes { get; set; }  //trebalo bi short za db?
 
         public string Score { get; set; }

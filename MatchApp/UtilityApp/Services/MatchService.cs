@@ -25,7 +25,6 @@ namespace UtilityApp.Services
         }
 
        
-
         public async Task GetMatchTimeSpanAndSave(TimeSpan interval, bool initiate, CancellationToken cancellationToken)
         {
   
@@ -64,6 +63,7 @@ namespace UtilityApp.Services
                         {
                             new MatchTime
                             {
+                                EventID=e.EventID,
                                 CurrentMinutes = e.CurrentMinutes,
                                 Score = e.Score,
                                 IsPause = e.IsPause,

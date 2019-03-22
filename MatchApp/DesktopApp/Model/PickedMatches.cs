@@ -14,13 +14,9 @@ namespace DesktopApp.Model
         public string HomeTeam { get; set; }
         public string AwayTeam { get; set; }
         public string Score { get; set; }
-        public DateTime StartTime { get; set; }
         public int CurrentMinutes { get; set; }
-        public DateTime FinishTime { get; set; }
-        public string StakeID { get; set; }
         public string StakeKey { get; set; }
-        public double StakeValue { get; set; }
+        public string StakeValue { get; set; }
       
-
     }
 }

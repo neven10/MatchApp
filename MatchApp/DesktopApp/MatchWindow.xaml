@@ -5,14 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="MatchWindow" Height="667.074" Width="1000">
+        Title="MatchWindow" Height="667.074" Width="1000" Loaded="Window_Loaded">
 
 
     <Grid>
-        <StackPanel Margin="10,43,227,317" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button Click="Button_Click">Test</Button>
+        <StackPanel Margin="10,43,57,317" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+          
             <Label>Current Matches</Label>
-            <ListView Name="currentMatchesListView">
+            <StackPanel Orientation="Horizontal">
+                <Button Name="Btn_AllFilter" Click="Btn_AllFilter_Click" >All</Button>
+                <Button Name="Btn_FootballFilter" Click="Btn_FootballFilter_Click">Football</Button>
+                <Button Name="Btn_HockeyFilter" Click="Btn_HockeyFilter_Click">Hockey</Button>
+           
+            </StackPanel>
+            <Separator></Separator>
+            <ListView Name="currentMatchesListView" Margin="0,0,23,0">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="100" Header="Sport" DisplayMemberBinding="{Binding Sport}"></GridViewColumn>
@@ -20,10 +27,29 @@
                         <GridViewColumn Width="150" Header="Guest" DisplayMemberBinding="{Binding AwayTeam}"></GridViewColumn>
                         <GridViewColumn Width="80" Header="Score" DisplayMemberBinding="{Binding Score}"></GridViewColumn>
                         <GridViewColumn Width="90" Header="Match Status" DisplayMemberBinding="{Binding Status}"></GridViewColumn>
-                        
+                        <GridViewColumn Width="Auto" Header="1" DisplayMemberBinding="{Binding StakeValueOne}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate >
+                                    <Button x:Name="Btn_SelectAndAddMatch" Click="SelectAndAddMatch" Tag="{Binding EventID}" Content="{Binding StakeValueOne}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto"  Header="x" DisplayMemberBinding="{Binding StakeValueX}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate >
+                                    <Button  Background="AliceBlue" x:Name="Btn_SelectAndAddMatch" Click="SelectAndAddMatch" Tag="{Binding EventID}" Content="{Binding StakeValueX}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
-
+                    
+                    
+                    
                 </ListView.View>
+
+            </ListView>
+            <ListView>
+                
             </ListView>
         </StackPanel>
 

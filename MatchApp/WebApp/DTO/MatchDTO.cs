@@ -17,5 +17,9 @@ namespace WebApp.DTO
         public int CurrentMinutes { get; set; }
         public string Score { get; set; }
         public bool IsPause { get; set; }
+        public double StakeValueOne { get; set; }
+        public double StakeValueX { get; set; }
+        public double StakeValueTwo { get; set; }
+
     }
 }

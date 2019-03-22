@@ -106,6 +106,8 @@ namespace LoginWindow
         private void LocalLoginButton_Click(object sender, RoutedEventArgs e)
         {
             MatchWindow matchWindow = new MatchWindow();
+
+
             matchWindow.Show();
             this.Close();
         }

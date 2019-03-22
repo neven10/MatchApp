@@ -17,7 +17,7 @@ namespace WebApp
             var scope = webHost.Services.CreateScope();
             var dbcontext = scope.ServiceProvider.GetRequiredService<MatchDbContext>();
             UtilityApp.Services.MatchService startService = new UtilityApp.Services.MatchService(dbcontext);
-          //  Task.Run(() => startService.GetMatchTimeSpanAndSave(TimeSpan.FromSeconds(15), true,CancellationToken.None));
+          // Task.Run(() => startService.GetMatchTimeSpanAndSave(TimeSpan.FromSeconds(10), true,CancellationToken.None));
             webHost.Run();
         }
 

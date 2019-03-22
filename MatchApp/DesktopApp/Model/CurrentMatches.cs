@@ -1,9 +1,6 @@
 ﻿using DesktopApp.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DesktopApp.Model
 {
@@ -24,16 +21,23 @@ namespace DesktopApp.Model
         public DateTime StartTime { get; set; }
         public int CurrentMinutes { get; set; }
         public DateTime FinishTime { get; set; }
-        public List<Stake> Stakes { get; set; }
+        public double StakeValueOne { get; set; }
+        public double StakeValueX { get; set; }
+        public double StakeValueTwo { get; set; }
+
         public bool IsPause { get; set; }
-        public string Status
-        { get => GetMatchStatus(); }
+        public string Status { get => GetMatchStatus(); }
+
+
+
+
         private string matchStatus;
         
 
         private string GetMatchStatus()
         {
             int timeDiff = ((TimeSpan)(FinishTime - StartTime)).Minutes / 2;
+
             if (IsPause == true)
             {
                 matchStatus = "Paused";
