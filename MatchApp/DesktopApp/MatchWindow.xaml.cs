@@ -32,6 +32,7 @@ namespace DesktopApp
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            PickedMatchCollection = new ObservableCollection<PickedMatches>();
 
         }
 
@@ -128,18 +129,19 @@ namespace DesktopApp
         {
             SportFilter = "Hockey";
         }
+      
 
-        private void SelectAndAddMatch(object sender, RoutedEventArgs e)
+        private void StakeClick(object sender, RoutedEventArgs e)
         {
+           
+            pickedMatchesListView.ItemsSource = PickedMatchCollection;
             Button button = sender as Button;
             EventIDSenderString = button.Tag.ToString();
-            StakeSenderString = button.Content.ToString();
-            Debug.WriteLine(EventIDSenderString);
-            Debug.WriteLine(StakeSenderString);
+            StakeSenderString = button.Content.ToString();     
 
             foreach (var cm in CurrentMatchesCollection)
             {
-                if(cm.EventID == button.Tag.ToString())
+                if (cm.EventID == button.Tag.ToString())
                 {
                     PickedMatchCollection.Add(
                 new PickedMatches
@@ -149,15 +151,14 @@ namespace DesktopApp
                     AwayTeam = cm.AwayTeam,
                     Score = cm.Score,
                     CurrentMinutes = cm.CurrentMinutes,
+                    StakeKey = button.Name,
                     StakeValue = button.Content.ToString()
+                    
+                    
 
                 });
                 }
             }
-            
-            
-
-
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Data.Model
         public string StakeId { get; set; }
 
         [StringLength(2)]
-        public string StakeKey { get; set; }    //probably enum then convert
+        public string StakeKey { get; set; }   
 
    
         public double StakeValue { get; set; }

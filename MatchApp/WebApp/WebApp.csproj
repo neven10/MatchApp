@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj" />
-    <ProjectReference Include="..\UtilityApp\UtilityApp.csproj" />
+    <ProjectReference Include="..\UtilityApp\MatchApp.Utility.csproj" />
   </ItemGroup>
 
 </Project>

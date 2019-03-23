@@ -13,7 +13,7 @@ namespace Data.Model
 
         public string EventID { get; set; }
 
-        public int CurrentMinutes { get; set; }  //trebalo bi short za db?
+        public int CurrentMinutes { get; set; } 
 
         public string Score { get; set; }
 

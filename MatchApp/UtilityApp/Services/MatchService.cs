@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using UtilityApp.Entities;
+using MatchApp.Utility.Entities;
 using System.Linq;
 using Microsoft.Extensions.Hosting;
 using System.Threading;
