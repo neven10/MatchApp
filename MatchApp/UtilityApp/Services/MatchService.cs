@@ -10,6 +10,7 @@ using MatchApp.Utility.Entities;
 using System.Linq;
 using Microsoft.Extensions.Hosting;
 using System.Threading;
+using MatchApp.Data;
 
 namespace UtilityApp.Services
 {

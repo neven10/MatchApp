@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApp.Models
+namespace MatchApp.API.Models
 {
     public class ErrorViewModel
     {

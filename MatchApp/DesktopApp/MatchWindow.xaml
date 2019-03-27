@@ -5,21 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="MatchWindow" Height="901.074" Width="1154.5" Loaded="Window_Loaded">
-
+        Title="MatchWindow" Height="901.074" Width="1408.5" Loaded="Window_Loaded">
 
     <Grid>
-        <StackPanel Margin="10,43,57,317" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-          
+        <StackPanel Margin="10,43,57,417" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Label>Current Matches</Label>
             <StackPanel Orientation="Horizontal">
                 <Button Name="Btn_AllFilter" Click="Btn_AllFilter_Click" >All</Button>
                 <Button Name="Btn_FootballFilter" Click="Btn_FootballFilter_Click">Football</Button>
                 <Button Name="Btn_HockeyFilter" Click="Btn_HockeyFilter_Click">Hockey</Button>
+                <Button Background="Gray" Name="TestButton" Click="TestButton_Click">Test</Button>
            
             </StackPanel>
             <Separator></Separator>
-            <ListView ScrollViewer.VerticalScrollBarVisibility="Visible" Name="currentMatchesListView" Margin="0,0,23,0" Height="231">
+            <ListView ScrollViewer.VerticalScrollBarVisibility="Visible" Name="currentMatchesListView" Height="327">
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="CurrentMatches">
                         <StackPanel Orientation="Vertical">
@@ -30,11 +29,13 @@
                                 <Button Background="SteelBlue" Content="{Binding Score}"></Button>
                                 <Button Background="SteelBlue" Content="{Binding Status}"></Button>
                                 <Label>1</Label>
-                                <Button  Content="{Binding StakeValueOne}" Tag="{Binding EventID}" Name="Stake1" Click="StakeClick"></Button>
+                                <Button  Content="{Binding StakeValueOne}" Name="Stake1"></Button>
                                 <Label>X</Label>
-                                <Button  Content="{Binding StakeValueX}" Tag="{Binding EventID}"  Name="StakeX" Click="StakeClick"></Button>
+                                <Button  Content="{Binding StakeValueX}" Name="StakeX"></Button>
                                 <Label>2</Label>
-                                <Button  Content="{Binding StakeValueTwo}" Tag="{Binding EventID}"  Name="Stake2" Click="StakeClick" ></Button>
+                                <Button  Content="{Binding StakeValueTwo}" Name="Stake2" ></Button>
+                                <Label> - </Label>
+                                <Button Background="Red" Tag="{Binding EventID}" Click="StakeClick">Select Match</Button>
 
                             </StackPanel>
          
@@ -47,39 +48,43 @@
 
 
             </ListView>
+            
             <ListView>
-                
             </ListView>
         </StackPanel>
 
 
-        <StackPanel Margin="10,342,227,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <ListView Name="pickedMatchesListView">
+        <StackPanel Margin="10,458,57,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button Click="Button_Click">PDF</Button>
+            <Label Name="RefreshLabel"></Label>
+            <ListView ScrollViewer.VerticalScrollBarVisibility="Visible"  Name="pickedMatchesListView" ItemsSource="{Binding PickedMatchCollection}">
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="PickedMatches">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="{Binding Sport}">
-                                </Button>
-                                <Button Content="{Binding HomeTeam}">
-                                </Button>
-                                <Button Content="{Binding AwayTeam}">
-                                </Button>
-                                <Button Content="{Binding Score}">
-                                </Button>
-                                <Button Content="{Binding CurrentMinutes}">
-                                </Button>
-                                <Button Content="{Binding StakeKey}">
-                                </Button>
-                                <Button Content="{Binding StakeValue}">
-                                </Button>
+                                <Button Content="{Binding Sport}"></Button>
+                                <Button Content="{Binding HomeTeam}"></Button>
+                                <Button Content="{Binding AwayTeam}"></Button>
+                                <Button Content="{Binding Score}"></Button>
+                                <Button Content="{Binding Status}"></Button>
+
+                                <Button Content="{Binding StakeValueOne}"></Button>
+                                <Button Background="Red" Content="{Binding SelectedStakeValueOne}" ></Button>
+                                <TextBox  Text= "{Binding SelectedStakeValueOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0{0.0}}" MinWidth="20"></TextBox>
+                                
+                                <Button Content="{Binding StakeValueX}"  ></Button>
+                                <Button Background="Red" Content="{Binding SelectedStakeValueX}" ></Button>
+                                <TextBox  Text="{Binding SelectedStakeValueX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0{0.0}}" MinWidth="20"></TextBox>
+                                
+                                <Button Content="{Binding StakeValueTwo}"></Button>
+                                <Button Background="Red" Content="{Binding SelectedStakeValueTwo}"></Button>
+                                <TextBox  Text="{Binding SelectedStakeValueTwo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0{0.0}}" MinWidth="20"></TextBox>
+
+                                <CheckBox IsChecked="{Binding IsBlocked, Mode=TwoWay}">Block?</CheckBox>
+
                             </StackPanel>
-                            
+
                         </StackPanel>
-                       
-
-
-
 
                     </DataTemplate>
                 </ListView.ItemTemplate>

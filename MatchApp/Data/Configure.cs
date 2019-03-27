@@ -2,15 +2,15 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text; 
 
-namespace Data
+namespace MatchApp.Data
 {
     public static class Configure
     {
         public static void ConfigureServices(IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<MatchDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Data")));
+            services.AddDbContext<MatchDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("MatchApp.Data")));
 
         }
     }

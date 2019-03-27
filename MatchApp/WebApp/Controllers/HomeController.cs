@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Data;
+using MatchApp.API.Models;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.Models;
 
-namespace WebApp.Controllers
+namespace MatchApp.API.Controllers
 {
     public class HomeController : Controller
     {

@@ -3,27 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DesktopApp"
+        xmlns:local1="clr-namespace:DesktopApp.Model"
+        xmlns:local2="clr-namespace:MatchApp.Desktop.Model"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" SnapsToDevicePixels="True"
         Background="{DynamicResource WindowBackgroundBrush}" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
-        <!--<Storyboard x:Key="FadeIn">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="window">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0.4"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>-->
-        <local:ValueConverter x:Key="ValueConverter" />
-
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
+        <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+              Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                              Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
-    <!--<Window.Triggers>
-        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-            <BeginStoryboard Storyboard="{StaticResource FadeIn}"/>
-        </EventTrigger>
-    </Window.Triggers>-->
+
+    
     <Border Style="{StaticResource CoreBorderStyle}" Height="496">
         <Grid>
             <Grid.RowDefinitions>
@@ -34,7 +32,6 @@
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0,0,0" Height="40">
                     <Path Width="19.5" Height="28.5" Margin="20,0,12,0" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{StaticResource ThemeColorBrush}" Data="F1 M 25,27L 46,19L 46,22.25L 28.5,29L 31.75,31.25L 51,23.75L 51,48.5L 31.75,57L 25,52L 25,27 Z "/>
-                    <!--<Image Source="/Ruby;component/Backend/Icons/32x32/Normal/asset-banknote.png" Style="{StaticResource UserControlImageStyle}" ></Image>-->
                     <TextBlock Foreground="{StaticResource ThemeColorBrush}" Text="Login" FontSize="20" Margin="8,2,0,0" FontWeight="Normal" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP" />
                 </StackPanel>
                 <Thumb Opacity="0" Background="Transparent" Foreground="{x:Null}" DragDelta="Thumb_OnDragDelta"/>
@@ -58,30 +55,6 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" Visibility="Visible" Name="AzureLoginGrid" Width="380">
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                            <Image Source="Images/images.jpg" Height="64" Width="64" Margin="0,20,0,0" />
-                            <Label Content="Azure Login" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
-                            <Grid Margin="0,0,0,8">
-                                <TextBlock Margin="4,1,2,0" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" Height="24" Text="Username" Foreground="{StaticResource UserControlButtonIsPressedBrush}"
-                                           Visibility="{Binding ElementName=AzureUserNameTextBox, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="AzureUserNameTextBox" CharacterCasing="Lower" TabIndex="0" />
-                            </Grid>
-                            <Grid Margin="0,0,0,8">
-                                <PasswordBox HorizontalAlignment="Center" HorizontalContentAlignment="Center" Background="Transparent" BorderBrush="{StaticResource MainBlackFontColor}"  VerticalContentAlignment="Center" Name="AzurePasswordBox" Height="36" Width="220" TabIndex="1" />
-                            </Grid>
-                            <Grid Margin="0,0,0,8">
-                                <TextBlock Margin="4,1,2,0" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" Height="24" Text="Database" Foreground="{StaticResource UserControlButtonIsPressedBrush}"
-                                           Visibility="{Binding ElementName=AzureDatabaseTextBox, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="AzureDatabaseTextBox" TabIndex="2" />
-                            </Grid>
-
-                            <ProgressBar x:Name="AzureMetroProgressBar" Visibility="Visible" Height="16" Margin="0,4,0,8" HorizontalAlignment="Center"  Width="220" Background="Transparent" BorderBrush="{StaticResource ThemeColorBrush}" Foreground="{DynamicResource ThemeColorBrush}" BorderThickness="1" IsIndeterminate="False" />
-
-                            <StackPanel Height="34" />
-                            <Button Name="AzureLoginButton" Content="Login" Width="220" Height="36" TabIndex="3" Margin="0,0,0,32"/>
-                        </StackPanel>
-                    </Grid>
                     <Grid Grid.Column="1" Name="SplitGrid" Width="20" Visibility="Visible">
                         <StackPanel Height="326" Width="1" Background="{StaticResource MainWindowSplitBorderBrush}" Margin="0,40,0,40"></StackPanel>
                     </Grid>
@@ -97,12 +70,13 @@
 
                                 <TextBlock Margin="4,8,2,6" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" Height="22" Text="Username" Foreground="{StaticResource UserControlButtonIsPressedBrush}"
                                            Visibility="{Binding ElementName=LocalUserNameTextBox, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.ColumnSpan="2" />
-                                <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="LocalUserNameTextBox" IsEnabled="True"  CharacterCasing="Lower" TabIndex="4" Grid.ColumnSpan="2" />
+                                <TextBox Style="{StaticResource LoginTextBoxStyle}"  Name="LocalUserNameTextBox" IsEnabled="True"  CharacterCasing="Lower" TabIndex="4" Grid.ColumnSpan="2" />
                             </Grid>
                             <Grid Margin="0,0,0,8">
                                 <PasswordBox Background="Transparent" HorizontalContentAlignment="Center" BorderBrush="{StaticResource MainBlackFontColor}" HorizontalAlignment="Center" VerticalContentAlignment="Center" Name="LocalPasswordBox" Height="36" Width="220" IsEnabled="True" TabIndex="5" />
                             </Grid>
                             <Button x:Name="LocalLoginButton" Content="Login" Width="220" Height="36" Margin="0,0,0,32" TabIndex="8" Click="LocalLoginButton_Click" />
+                            <Label Name="LabelErrorLogin" Foreground="Red"></Label>
 
                             <Label Content="Don't have account yet? Click here:" FontSize="10"></Label>
                             <Button Name="Btn_OpenNewUser" Content="Register" Width="219" Height="36" Click="Btn_OpenNewUser_Click"></Button>
@@ -110,21 +84,72 @@
                     </Grid>
                 </Grid>
             </Grid>
+          
             <Popup Placement="Center" Name="Popup_NewUser" >
                 <Border BorderBrush="Black" BorderThickness="2">
-                <Grid Background="White" Width="402" Height="378" >
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+
+
+                    <Grid Background="White" Width="402" Height="378" x:Name="PopupGrid">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                           
                         <TextBlock Text="Please enter following information:"></TextBlock>
-                        <Label>Username:</Label>
-                        <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="Textbox_NewUserName" IsEnabled="True"  CharacterCasing="Lower"  Grid.ColumnSpan="2" />
-                        <Label>Password:</Label>
-                            <PasswordBox   Name="Textbox_NewPassword" IsEnabled="True"   Grid.ColumnSpan="2" Height="32" HorizontalContentAlignment="Center" />
-                        <Label>Email:</Label>
-                            <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="Textbox_NewEmail" IsEnabled="True"   Grid.ColumnSpan="2" />
+                            <Label>Username:</Label>
+
+                            <TextBox Style="{StaticResource TextBoxInError}" Name="Textbox_NewUserName" IsEnabled="True"  CharacterCasing="Lower"  Grid.ColumnSpan="2" FontSize="20">
+                                <TextBox.Text>
+                                    <Binding Path="UserName"
+                                           UpdateSourceTrigger="PropertyChanged" >
+                                        <Binding.ValidationRules>
+                                            <local2:UserRule Min="3" Max="20"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+
+
+                            <Label>Password:</Label>
+                            <PasswordBox   Name="Textbox_NewPassword" IsEnabled="True"   Grid.ColumnSpan="2" Height="32" HorizontalContentAlignment="Center" FontSize="20">
+                            </PasswordBox>
+                            
+                                                        
+                        <Label >Email:</Label>
+                            <TextBox Style="{StaticResource TextBoxInError}"  Name="Textbox_NewEmail" IsEnabled="True"   Grid.ColumnSpan="2" FontSize="20" >
+                                <TextBox.Text>
+                                    <Binding Path="Email"
+                                           UpdateSourceTrigger="PropertyChanged" >
+                                        <Binding.ValidationRules>
+                                            <local2:EmailRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            
+                            
                         <Label>Name:</Label>
-                            <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="Textbox_NewName"  IsEnabled="True" CharacterCasing="Normal"  TabIndex="4" Grid.ColumnSpan="2" />
+                            <TextBox Style="{StaticResource TextBoxInError}" Name="Textbox_NewName"  IsEnabled="True" CharacterCasing="Normal"  TabIndex="4" Grid.ColumnSpan="2" FontSize="20">
+                                <TextBox.Text>
+                                    <Binding Path="Name"
+                                           UpdateSourceTrigger="PropertyChanged" >
+                                        <Binding.ValidationRules>
+                                            <local2:UserRule Min="3" Max="20"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            
+                            
                         <Label>Surname:</Label>
-                            <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="Textbox_NewSurname" IsEnabled="True" CharacterCasing="Normal"  Grid.ColumnSpan="2" />
+                            <TextBox Style="{StaticResource TextBoxInError}" Name="Textbox_NewSurname" IsEnabled="True" CharacterCasing="Normal"  Grid.ColumnSpan="2" FontSize="20" >
+                                <TextBox.Text>
+                                    <Binding  Path="Surname"
+                                           UpdateSourceTrigger="PropertyChanged" >
+                                        <Binding.ValidationRules>
+                                            <local2:UserRule Min="3" Max="20"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+
+                            </TextBox>
                             <Separator/>
                             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Name="Btn_RegisterNewUser" Click="Btn_RegisterNewUser_Click">Register</Button>

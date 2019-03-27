@@ -1,10 +1,8 @@
 ﻿using Data.Model;
+using MatchApp.Data.Model;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Data
+namespace MatchApp.Data
 {
     public class MatchDbContext : DbContext
     {
@@ -17,6 +15,7 @@ namespace Data
         public DbSet<MatchTime> MatchTimes  { get; set; }
         public DbSet<Stakes>  Stakes { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<PickedMatches> PickedMatches { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

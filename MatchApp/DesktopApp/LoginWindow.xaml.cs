@@ -1,10 +1,13 @@
 ﻿using DesktopApp;
 using DesktopApp.Model;
+using MatchApp.Shared;
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
 namespace LoginWindow
@@ -15,12 +18,19 @@ namespace LoginWindow
     public partial class MainWindow : Window
     {
         private static HttpClient httpClient;
+        public User User { get; set; }
+
+        string Error { get; set; }
+
 
         public MainWindow()
         {
             InitializeComponent();
-   
-            AzureLoginGrid.Visibility = Visibility.Collapsed;
+            User = new User();
+            DataContext = this.User;
+
+
+            
             SplitGrid.Visibility = Visibility.Collapsed;
             if (LocalLoginGrid.Visibility == Visibility.Visible)
             {
@@ -31,7 +41,7 @@ namespace LoginWindow
 
         private void CheckBoxChanged(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void BtnActionMinimize_OnClick(object sender, RoutedEventArgs e)
@@ -58,7 +68,7 @@ namespace LoginWindow
 
         private void Btn_OpenNewUser_Click(object sender, RoutedEventArgs e)
         {
-            if(!Popup_NewUser.IsOpen)
+            if (!Popup_NewUser.IsOpen)
             {
                 Popup_NewUser.IsOpen = true;
             }
@@ -84,32 +94,60 @@ namespace LoginWindow
 
         private async void Btn_RegisterNewUser_Click(object sender, RoutedEventArgs e)
         {
-            User user = new User
-            {
-                Guid = Guid.NewGuid().ToString(),
-                UserName = Textbox_NewUserName.Text,
-                Email = Textbox_NewEmail.Text,
-                Name = Textbox_NewName.Text,
-                Surname = Textbox_NewSurname.Text             
-            };
 
-             httpClient = new HttpClient();
-             var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44315/api/Users/PostUser");
-             var json = JsonConvert.SerializeObject(user);
-             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-             request.Content = stringContent;
-             var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false); //(HttpMethod.Post, "api/Users/PostUser",user);
-             var resonseMessage =  response.EnsureSuccessStatusCode();
+            User.UserName = Textbox_NewUserName.Text;
+            User.Password = Textbox_NewPassword.Password;
+            User.Email = Textbox_NewEmail.Text;
+            User.Name = Textbox_NewName.Text;
+            User.Surname = Textbox_NewSurname.Text;
+         
+
+            httpClient = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44315/api/Users/PostUser");
+            var json = JsonConvert.SerializeObject(User);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            request.Content = stringContent;
+            var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead);
+
+
+            if (Popup_NewUser.IsOpen)
+            {
+                ClearPopUpTextboxes();
+                Popup_NewUser.IsOpen = false;
+            }
 
         }
 
-        private void LocalLoginButton_Click(object sender, RoutedEventArgs e)
+
+        private async void LocalLoginButton_Click(object sender, RoutedEventArgs e)
         {
-            MatchWindow matchWindow = new MatchWindow();
+            var user = new UserDTO
+            {
+                UserName = LocalUserNameTextBox.Text,
+                Password = LocalPasswordBox.Password,
+
+            };
+            httpClient = new HttpClient();
+            var json = JsonConvert.SerializeObject(user);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44315/api/Users/Auth")
+            {
+                Content = stringContent,
+
+            };
+            var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead);
+
+            LabelErrorLogin.Content = LocalUserNameTextBox.Text +" - "+ response.StatusCode;
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                MatchWindow matchWindow = new MatchWindow();
+                matchWindow.Show();
+                this.Close();
+            }
 
 
-            matchWindow.Show();
-            this.Close();
+
+
         }
     }
 }

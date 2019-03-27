@@ -1,0 +1,121 @@
+﻿@page "/matches"
+@inject HttpClient httpClient
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Sport</td>
+            <td>Host</td>
+            <td>Guest</td>
+            <td>Score</td>
+            <td>Status</td>
+            <td>1</td>
+            <td>New 1</td>
+            <td>X</td>
+            <td>New X</td>
+            <td>2</td>
+            <td>New 2</td>
+            <td>Blocked</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Match)
+        {
+        <tr>
+            <td>@item.Sport</td>
+            <td>@item.HomeTeam</td>
+            <td>@item.AwayTeam</td>
+            <td>@item.Score</td>
+            <td>@item.Status</td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm">@item.StakeValueOne</button>
+            </td>
+            <td>
+                <button type="button" class="@(@item.SelectedStakeValueOne==0 ? "btn-primary btn-sm" : "btn-warning btn-sm")">@item.SelectedStakeValueOne</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm">@item.StakeValueX</button>
+            </td>
+            <td>
+                <button type="button" class="@(@item.SelectedStakeValueX==0 ? "btn-primary btn-sm" : "btn-warning  btn-sm")">@item.SelectedStakeValueX</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm">@item.StakeValueTwo</button>
+            </td>
+            <td>
+                <button type="button" class="@(@item.SelectedStakeValueTwo==0 ? "btn-primary btn-sm" : "btn-warning  btn-sm")">@item.SelectedStakeValueTwo</button>
+            </td>
+            <td>
+                <button type="button" class="@(@item.IsBlocked==true ? "btn-danger btn-sm" : "")"></button>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+@functions
+{
+
+    List<PickedMatchDTO> Match { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        Match = new List<PickedMatchDTO>();
+        await RefreshMatches(TimeSpan.FromSeconds(1), true);
+    }
+
+    private async Task RefreshMatches(TimeSpan interval, bool initiate)
+    {
+        while (initiate)
+        {
+            await Task.Delay(interval);
+            await GetMatches();
+        }
+
+    }
+
+
+    private async Task GetMatches()
+    {
+        List<PickedMatchDTO> matchDTOs = new List<PickedMatchDTO>();
+
+        matchDTOs = await httpClient.GetJsonAsync<List<PickedMatchDTO>>("https://localhost:44315/api/Match/GetPickedMatches");
+
+        Match = matchDTOs;
+        StateHasChanged();
+
+    }
+
+
+    public class PickedMatchDTO
+    {
+
+        public string Sport { get; set; }
+        public string HomeTeam { get; set; }
+        public string AwayTeam { get; set; }
+        public string Score { get; set; }
+        public string Status { get; set; }
+
+        public double StakeValueOne { get; set; }
+        public double SelectedStakeValueOne { get; set; }
+
+        public double StakeValueX { get; set; }
+        public double SelectedStakeValueX { get; set; }
+
+        public double StakeValueTwo { get; set; }
+        public double SelectedStakeValueTwo { get; set; }
+
+        public bool IsBlocked { get; set; }
+    }
+
+
+
+}
+
+
+
+

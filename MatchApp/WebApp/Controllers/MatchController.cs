@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Data;
+﻿using Data;
+using MatchApp.Data;
+using MatchApp.Data.Model;
+using MatchApp.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApp.DTO;
-using WebApp.Models;
-using WebApp.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace WebApp.Controllers
+namespace MatchApp.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
@@ -44,17 +43,65 @@ namespace WebApp.Controllers
                     StartTime = s.StartTime,
                     FinishTime = s.FinishTime,
                     IsPause = s.MatchTimeList.Select(x => x.IsPause).FirstOrDefault(),
-                    StakeValueOne = (from x1 in s.MatchTimeList from x2 in x1.StakesList  where x2.StakeKey=="1" select x2.StakeValue).FirstOrDefault(),
-                    StakeValueX = (from x1 in s.MatchTimeList from x2 in x1.StakesList where x2.StakeKey == "X" select x2.StakeValue).FirstOrDefault(),
-                    StakeValueTwo = (from x1 in s.MatchTimeList from x2 in x1.StakesList where x2.StakeKey == "2" select x2.StakeValue).FirstOrDefault(),
+                    StakeValueOne = s.MatchTimeList.Select(x => x.StakesList.Find(u => u.StakeKey == "1")).Select(o => o.StakeValue).FirstOrDefault(),            
+                    StakeValueX = s.MatchTimeList.Select(x => x.StakesList.Find(u => u.StakeKey == "X")).Select(o => o.StakeValue).FirstOrDefault(),
+                    StakeValueTwo = s.MatchTimeList.Select(x => x.StakesList.Find(u => u.StakeKey == "2")).Select(o => o.StakeValue).FirstOrDefault(),
+                    //StakeValueTwo = (from x1 in s.MatchTimeList from x2 in x1.StakesList where x2.StakeKey == "2" select x2.StakeValue).FirstOrDefault(),
                 });                 
             }
             return dto; 
         }
 
 
-        
+        [HttpGet("[action]")]
+        public async Task<ActionResult<List<PickedMatchDTO>>> GetPickedMatches()
+        {
+            var match = await _context.PickedMatches.ToListAsync();
+            List<PickedMatchDTO> pickedMatchDTOs = new List<PickedMatchDTO>();
+            foreach(var s in match)
+            {
+                pickedMatchDTOs.Add(new PickedMatchDTO
+                {
+                    HomeTeam = s.HomeTeam,
+                    AwayTeam =s.AwayTeam,
+                    Sport =s.Sport,
+                    Score=s.Score,
+                    Status=s.Status,
+                    StakeValueOne =s.StakeValueOne,
+                    StakeValueTwo = s.StakeValueTwo,
+                    StakeValueX=s.StakeValueX,
+                    SelectedStakeValueOne=s.SelectedStakeValueOne,
+                    SelectedStakeValueTwo=s.SelectedStakeValueTwo,
+                    SelectedStakeValueX=s.SelectedStakeValueX,
+                    IsBlocked = s.IsBlocked
+                });
 
-       
+            }
+            return pickedMatchDTOs;
+        }
+
+
+
+
+
+        [HttpPost("[action]")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<PickedMatches>>> PostSelectedMatches (List<PickedMatches> matches)
+        {
+            foreach(var m in matches)
+            {            
+                _context.PickedMatches.Add(m);
+            }           
+            await _context.SaveChangesAsync();
+
+            return NoContent(); ;
+        }
+
+
+
+
+
+
     }
 }

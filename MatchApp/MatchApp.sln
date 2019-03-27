@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopApp", "DesktopApp\DesktopApp.csproj", "{4F844BC0-045C-4256-B4EB-2831CBF97AD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchApp.Desktop", "DesktopApp\MatchApp.Desktop.csproj", "{4F844BC0-045C-4256-B4EB-2831CBF97AD2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{F62678A3-2B9D-46F9-9C24-261B8BADE2D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchApp.API", "WebApp\MatchApp.API.csproj", "{F62678A3-2B9D-46F9-9C24-261B8BADE2D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchApp.Utility", "UtilityApp\MatchApp.Utility.csproj", "{E56B5C62-4956-41A9-81B1-057DD5ED9E32}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{0F169E33-22ED-4631-9E36-8E315EC91063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchApp.Data", "Data\MatchApp.Data.csproj", "{0F169E33-22ED-4631-9E36-8E315EC91063}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI.Server", "WebUI.Server\WebUI.Server.csproj", "{0AD964AB-5C8F-4809-B0A7-A38D23C04727}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchApp.Shared", "MatchApp.Shared\MatchApp.Shared.csproj", "{61EB05A8-B6AD-4258-B5C9-285FF5075179}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI.App", "WebUI.App\WebUI.App.csproj", "{8DF5DCA3-536C-4DF0-B2A3-7CC8ED163EF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchApp.WebUI.Server", "MatchApp.WebUI.Server\MatchApp.WebUI.Server.csproj", "{35C74ED7-F69B-420F-8F5C-18A636328D04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchApp.Shared", "MatchApp.Shared\MatchApp.Shared.csproj", "{61EB05A8-B6AD-4258-B5C9-285FF5075179}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchApp.WebUI.App", "MatchApp.WebUI.App\MatchApp.WebUI.App.csproj", "{F6153217-5370-46F7-ABC4-D8011BA85883}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,18 +39,18 @@ Global
 		{0F169E33-22ED-4631-9E36-8E315EC91063}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F169E33-22ED-4631-9E36-8E315EC91063}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F169E33-22ED-4631-9E36-8E315EC91063}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0AD964AB-5C8F-4809-B0A7-A38D23C04727}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0AD964AB-5C8F-4809-B0A7-A38D23C04727}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0AD964AB-5C8F-4809-B0A7-A38D23C04727}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0AD964AB-5C8F-4809-B0A7-A38D23C04727}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DF5DCA3-536C-4DF0-B2A3-7CC8ED163EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DF5DCA3-536C-4DF0-B2A3-7CC8ED163EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DF5DCA3-536C-4DF0-B2A3-7CC8ED163EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DF5DCA3-536C-4DF0-B2A3-7CC8ED163EF4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61EB05A8-B6AD-4258-B5C9-285FF5075179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61EB05A8-B6AD-4258-B5C9-285FF5075179}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61EB05A8-B6AD-4258-B5C9-285FF5075179}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61EB05A8-B6AD-4258-B5C9-285FF5075179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35C74ED7-F69B-420F-8F5C-18A636328D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35C74ED7-F69B-420F-8F5C-18A636328D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35C74ED7-F69B-420F-8F5C-18A636328D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35C74ED7-F69B-420F-8F5C-18A636328D04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6153217-5370-46F7-ABC4-D8011BA85883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6153217-5370-46F7-ABC4-D8011BA85883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6153217-5370-46F7-ABC4-D8011BA85883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6153217-5370-46F7-ABC4-D8011BA85883}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

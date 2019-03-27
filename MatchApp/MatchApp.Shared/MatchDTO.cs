@@ -19,5 +19,37 @@ namespace MatchApp.Shared
         public double StakeValueOne { get; set; }
         public double StakeValueX { get; set; }
         public double StakeValueTwo { get; set; }
+
+        public string Status { get => GetMatchStatus(); }
+        private string matchStatus;
+
+
+        private string GetMatchStatus()
+        {
+            int timeDiff = ((TimeSpan)(FinishTime - StartTime)).Minutes / 2;
+
+            if (IsPause == true)
+            {
+                matchStatus = "Paused";
+            }
+            else if (DateTime.Now == StartTime + TimeSpan.FromMinutes(timeDiff))
+            {
+                matchStatus = "HalfTime";
+            }
+            else if (DateTime.Now > FinishTime)
+            {
+                matchStatus = "Ended";
+            }
+            else
+            {
+                matchStatus = CurrentMinutes.ToString() + "minutes";
+            }
+            return matchStatus;
+        }
+
+        private void SetMatchStatus(string value)
+        {
+            matchStatus = value;
+        }
     }
 }
